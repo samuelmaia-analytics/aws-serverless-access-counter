@@ -21,12 +21,12 @@ Implementar uma arquitetura serverless na AWS para contabilizar acessos a uma p�
 
 ## Arquitetura
 
-![Arquitetura serverless na AWS](assets/arquitetura-serverless-aws.png)
+![Arquitetura serverless na AWS](assets/nuvem-aws-arquitetura-serverless.png)
 
 ## Documentação
 
 - [Apresentação do TCC](docs/apresentacao-tcc.pdf)
-- [Imagem da arquitetura](assets/arquitetura-serverless-aws.png)
+- [Imagem da arquitetura](assets/nuvem-aws-arquitetura-serverless.png)
 
 ## Serviços AWS utilizados
 
@@ -101,7 +101,7 @@ aws-serverless-access-counter/
 |-- .gitignore
 |-- LICENSE
 |-- assets/
-|   `-- arquitetura-serverless-aws.png
+|   `-- nuvem-aws-arquitetura-serverless.png
 |-- docs/
 |   `-- apresentacao-tcc.pdf
 |-- frontend/
