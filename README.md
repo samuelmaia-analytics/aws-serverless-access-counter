@@ -23,24 +23,37 @@ Implementar uma arquitetura serverless na AWS para contabilizar acessos a uma p�
 
 ![Arquitetura serverless na AWS](assets/arquitetura-serverless-aws.png)
 
+## Documentação
+
+- [Apresentação do TCC](docs/apresentacao-tcc.pdf)
+- [Imagem da arquitetura](assets/arquitetura-serverless-aws.png)
+
 ## Serviços AWS utilizados
 
+- **AWS WAF**: camada de proteção para requisições web.
+- **Amazon CloudFront**: distribuição de conteúdo e entrega da aplicação com baixa latência.
 - **Amazon S3**: hospedagem dos arquivos estáticos do frontend.
 - **Amazon API Gateway**: exposição de um endpoint HTTP para receber chamadas da página.
 - **AWS Lambda**: execução da lógica serverless responsável por incrementar o contador.
 - **Amazon DynamoDB**: armazenamento do contador de acessos com atualização atômica.
 - **Amazon CloudWatch**: coleta de logs, métricas e suporte à observabilidade da aplicação.
+- **Amazon SNS**: envio de notificações e alertas.
+- **AWS Budgets**: acompanhamento de custos e configuração de alertas de orçamento.
 - **AWS IAM**: controle de permissões entre os serviços da arquitetura.
+- **AWS CDK**: possibilidade de provisionamento da infraestrutura como código.
+- **AWS Trusted Advisor**: apoio à revisão de boas práticas de segurança, custos e operação.
 
 ## Fluxo da arquitetura
 
-1. O usuário acessa a página estática hospedada no Amazon S3.
-2. O frontend executa uma chamada `POST` para um endpoint do Amazon API Gateway.
-3. O API Gateway aciona uma função AWS Lambda.
-4. A função Lambda utiliza o DynamoDB para incrementar o contador de forma atômica.
-5. O DynamoDB retorna o novo valor do contador.
-6. A Lambda retorna uma resposta JSON para o API Gateway.
-7. O frontend pode exibir ou registrar o resultado da operação.
+1. O usuário acessa a aplicação pelo navegador.
+2. A requisição passa por uma camada de proteção com AWS WAF e distribuição via Amazon CloudFront.
+3. O CloudFront entrega o frontend estático armazenado no Amazon S3.
+4. O frontend executa uma chamada `POST` para o endpoint `/contador` no Amazon API Gateway.
+5. O API Gateway aciona uma função AWS Lambda.
+6. A função Lambda utiliza o DynamoDB para incrementar o contador de forma atômica.
+7. O DynamoDB retorna o novo valor do contador.
+8. A Lambda retorna uma resposta JSON para o API Gateway.
+9. Métricas, logs, alertas e acompanhamento de custos podem ser tratados com CloudWatch, SNS e AWS Budgets.
 
 ## Segurança
 
@@ -50,6 +63,7 @@ A solução foi pensada com foco em boas práticas de segurança para ambientes 
 - Ausência de credenciais AWS, tokens ou chaves de acesso no código-fonte.
 - Configuração de variáveis de ambiente para parâmetros como o nome da tabela.
 - Possibilidade de aplicação de CORS no API Gateway de forma restrita ao domínio autorizado.
+- Proteção de borda com AWS WAF e acesso ao S3 preferencialmente via CloudFront.
 - Separação entre frontend, função de backend e infraestrutura.
 
 ## Observabilidade
@@ -60,14 +74,17 @@ A observabilidade pode ser realizada com o Amazon CloudWatch:
 - Métricas de invocação, erro e duração da Lambda.
 - Métricas de requisições no API Gateway.
 - Alarmes para falhas, aumento de erros ou comportamento inesperado.
+- Notificações de alertas por Amazon SNS.
 
 ## Controle de custos
 
 A arquitetura prioriza serviços com cobrança sob demanda:
 
 - O Amazon S3 armazena e entrega arquivos estáticos com baixo esforço operacional.
+- O Amazon CloudFront ajuda a otimizar entrega de conteúdo estático em escala.
 - O API Gateway e a AWS Lambda cobram conforme o uso.
 - O DynamoDB pode ser configurado em modo sob demanda para cenários com tráfego variável.
+- O AWS Budgets pode apoiar o acompanhamento de gastos e alertas de orçamento.
 - A ausência de servidores dedicados reduz custos de provisionamento, manutenção e ociosidade.
 
 Nenhum valor real de custo foi estimado neste repositório, pois preços dependem de região, volume de acessos e configuração final dos serviços.
@@ -80,23 +97,22 @@ Serverless é adequado para este cenário porque permite criar uma solução sim
 
 ```text
 aws-serverless-access-counter/
-├── README.md
-├── .gitignore
-├── assets/
-│   └── arquitetura-serverless-aws.png
-├── docs/
-│   ├── apresentacao-tcc.pdf
-│   ├── arquitetura-serverless-aws.docx
-│   └── case-contador-acesso-serverless.docx
-├── frontend/
-│   ├── index.html
-│   ├── style.css
-│   └── script.js
-├── lambda/
-│   ├── contador.py
-│   └── requirements.txt
-└── infra/
-    └── README.md
+|-- README.md
+|-- .gitignore
+|-- LICENSE
+|-- assets/
+|   `-- arquitetura-serverless-aws.png
+|-- docs/
+|   `-- apresentacao-tcc.pdf
+|-- frontend/
+|   |-- index.html
+|   |-- style.css
+|   `-- script.js
+|-- lambda/
+|   |-- contador.py
+|   `-- requirements.txt
+`-- infra/
+    `-- README.md
 ```
 
 ## Como executar localmente
