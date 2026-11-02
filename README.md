@@ -2,15 +2,15 @@
 
 Projeto desenvolvido como Trabalho de Conclusão de Curso da **Escola da Nuvem**, no programa **AWS re/Start**, turma **BRSAO239**.
 
-> Uma aplicação simples de contagem de acessos não precisa depender de servidores dedicados e manutenção constante de infraestrutura. Para demonstrar uma alternativa, desenvolvemos uma arquitetura serverless na AWS com entrega web, API, processamento, persistência, segurança, observabilidade e controle de custos. O resultado é uma solução baseada em serviços gerenciados, com escalabilidade sob demanda e menor necessidade de administração de servidores.
+> Uma aplicação simples de contagem de acessos não precisa depender de servidores dedicados e manutenção constante de infraestrutura. Para demonstrar uma alternativa, documentamos uma arquitetura serverless na AWS e versionamos o frontend e a lógica do contador. O desenho prevê entrega web, API, processamento, persistência, segurança, observabilidade e controle de custos.
 
 ## Método CAR
 
 **Contexto:** uma startup precisa acompanhar acessos a uma página institucional com tráfego variável, sem manter servidores dedicados nem criar uma infraestrutura operacionalmente complexa.
 
-**Ação:** foi construída uma arquitetura com 10 serviços AWS: CloudFront, S3, API Gateway, Lambda, DynamoDB, CloudWatch, IAM, WAF, SNS e AWS Budgets.
+**Ação:** foi documentada uma arquitetura com dez serviços AWS e versionado o código do frontend e da função Lambda para incremento atômico do contador no DynamoDB.
 
-**Resultado:** a solução separa frontend, API, processamento e persistência em serviços gerenciados, adiciona proteção de borda, observabilidade, alertas e acompanhamento de custos, evitando a necessidade de manter uma instância de servidor dedicada para esse cenário.
+**Resultado:** o código demonstra a lógica do contador com persistência atômica no DynamoDB. A arquitetura documenta a separação entre frontend, API e persistência, além dos componentes previstos de segurança, observabilidade e custos.
 
 ## O problema
 
@@ -31,7 +31,11 @@ Usuário
  → CloudWatch / SNS / Budgets
 ```
 
-## Principais entregas
+## Escopo da implementação
+
+O repositório contém frontend estático e função Lambda em Python com incremento atômico no DynamoDB. O frontend ainda precisa receber o endpoint real do API Gateway. A infraestrutura como código está planejada; o conteúdo versionado não comprova implantação dos dez serviços apresentados na arquitetura.
+
+## Componentes da solução documentada
 
 - Frontend estático preparado para hospedagem no Amazon S3.
 - Distribuição de conteúdo via Amazon CloudFront.
